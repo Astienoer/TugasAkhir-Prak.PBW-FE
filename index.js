@@ -4,8 +4,6 @@ const app = createApp({
   setup() {
     const url = "http://localhost:7000/mahasiswa";
 
-    
-
     const mahasiswa = ref({
       id: null,
       nim: "",
