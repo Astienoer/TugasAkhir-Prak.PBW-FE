@@ -4,144 +4,150 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-ABSEN TEKNIK INFORMATIKA</title>
+    <title>Daftar Warga RT 05 Binong</title>
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
-  <body>
+  <body class="bg-gray-200"> 
     <div>
-    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
-      <div class="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="./index.html" class="flex items-center">
-            <img src="./img/logo.png" class="mr-3 h-6 sm:h-9" alt="Logo uninus">
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">E-Absen</span>
-        </a>
-        <div class="w-full md:block md:w-auto" id="navbar-default">
-          <ul class="flex flex-col p-4 mt-4 bg-gray-900 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <a href="./index.html" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Home</a>
-            </li>
-            <li>
-              <a href="./about.html" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    
+      <header class="flex w-full h-[80px] p-6 bg-white">
+        <figure class="flex items-center pl-[30 px]">
+        <img class="w-[40px] h-[50px] flex ml-[100px]" src="./assets/1logo.png" alt="">
+        </figure>     
+        <nav class="flex gap-x-5 text-[20px] text-black pr-[35px] ml-[50px] font-medium ">
+          <span class="text-teal-500 font-semibold">Data Warga RT 05 Binong</span>
+        </nav>
+        
+    </header>
     
     <section id="about" class="pt-5 pb-25">
-      <div class="container">
-          <div class="flex flex-wrap" id="app">
+      <div class="container"  id="app">
+          <div class="flex flex-wrap">
+            <div class="w-full px-3 lg:w-1/2">
+              <h3 class=" ml-6 font-semibold text-dark text-2xl mb-4 lg:text-2xl lg:pt-10 "> Silahkan isi data berikut</h3>
+              <div class="w-full max-w-xs">
+              <form
+              @submit.prevent="wargaisUpdate ? updateWarga() : submitWarga()"
+              class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            >
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                Nomor Induk Keluarga
+              </label>
+              <input
+                v-model="warga.nik"
+                type="text"
+                placeholder="Masukkan nik anda"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                Nama
+              </label>
+              <input
+                v-model="warga.nama"
+                type="text"
+                placeholder="Masukkan nama anda"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                Jenis Kelamin 
+                <br><p class="text-xs text-yellow-700">Perempuan / Laki-Laki</p>
+              </label>
+                      <div class="flex items-center mb-4">
+                <input v-model="warga.jenisKelamin" type="radio" value="Perempuan" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label  class="ml-2 text-sm font-medium text-black-900" value="Perempuan">Perempuan</label>
+            </div>
+            <div class="flex items-center mb-4">
+                <input v-model="warga.jenisKelamin"type="radio" value="Laki-Laki" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label  class="ml-2 text-sm font-medium text-black-900" value="Laki Laki">Laki-Laki</label>
+            </div>
+
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                Status
+              </label>
+              <input
+                v-model="warga.status"
+                type="text"
+                placeholder="Masukkan Status"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+
+              <button
+                class=" hover:text-teal-900 text-center w-full bg-teal-500 rounded-full text-white py-3 font-medium"
+                type="submit"
+              >
+                {{ warga.isUpdate ? 'Update' : 'Daftar'}}
+              </button>
+              <span class="text-[10px] pt-[10px] text-teal-600 ">Created By Astie Noer Hadiyanti</span>
+            </form>     
+         </div>
+          </div>
               <div class="w-full px-9 mb-10 lg:w-1/2">
-                  <h4 class="font-bold uppercase text-primary text-lg mb-3">TEKNIK INFORMATIKA UNIVERSITAS ISLAM NUSANTARA</h4>
-                  <h2 class="font-bold text-dark text-3xl mb-5 max-w-xl lg:text-4xl">ABSEN MAHASISWA</h2>
-                  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                      <div class="overflow-hidden">
-                        <table class="min-w-full">
-                          <thead class="bg-white border-b">
-                            <tr>
-                              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                NIM
-                              </th>
-                              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Nama
-                              </th>
-                              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Status Kehadiran
-                              </th>
-                              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Aksi
-                              </th>
+                <h4 class=" ml-8 font-bold uppercase text-primary text-lg mb-3 text-teal-500">DAFTAR WARGA RT 05 BINONG SAAT INI</h4>
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                      <table class="min-w-full">
+                        <thead class="bg-teal-500 border-b ">
+                          <tr>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">
+                              NIK
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">
+                              Nama
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">
+                              Jenis Kelamin
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">
+                              Status
+                            </th>
+                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">
+                              Aksi
+                            </th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody v-for="(item, index) in warga.list" :key="index">
+                          <tr class="bg-gray-100 border-b">
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                {{ item.nik }}
+                            </td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {{ item.nama}} 
+                            </td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {{ item.jenisKelamin }}
+                            </td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              {{ item.status }}
+                            </td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                              <button @click="getWargaById(item.id)"><img class="w-[25px]" src="./assets/edit.svg" alt=""></button>
+                              <button @click="deleteWarga(item.id)"><img class="w-[30px]" src="./assets/delete.png" alt=""></button>
                               
-                            </tr>
-                          </thead>
-                          <tbody v-for="(item, index) in mahasiswa.list" :key="index">
-                            <tr class="bg-gray-100 border-b">
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                  {{ item.nim }}
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {{ item.nama}} 
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                {{ item.keterangan }}
-                              </td>
-                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                <button type="button" class="inline-block px-6 py-2 border-2 border-green-600 text-green-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"  @click="getMahasiswaById(item.id)">Edit</button>
-                                <button type="button" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" @click="deleteMahasiswa(item.id)">Hapus</button>
-                              </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                  </div>
+                            </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                 </div>
-              </div>
-              <div class="w-full px-3 lg:w-1/2">
-                  <h3 class="font-semibold text-dark text-2xl mb-4 lg:text-3xl lg:pt-10 "> E-ABSEN</h3>
-                  <div class="w-full max-w-xs">
-                  <form
-                  @submit.prevent="mahasiswa.isUpdate ? updateMahasiswa() : submitMahasiswa()"
-                  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-                >
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                    Nomor Induk Mahasiswa
-                  </label>
-                  <input
-                    v-model="mahasiswa.nim"
-                    type="text"
-                    placeholder="Masukkan nim anda"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                    Nama Mahasiswa
-                  </label>
-                  <input
-                    v-model="mahasiswa.nama"
-                    type="text"
-                    placeholder="Masukkan nama anda"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                    Keterangan Kehadiran
-                    <br><p class="text-xs text-yellow-700">Hadir / Izin / Tidak Hadir</p>
-                  </label>
-                          <div class="flex items-center mb-4">
-                    <input v-model="mahasiswa.keterangan"  id="default-radio-1" type="radio" value="Hadir" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="default-radio-1" class="ml-2 text-sm font-medium text-black-900" value="Hadir">Hadir</label>
-                </div>
-                <div class="flex items-center mb-4">
-                    <input v-model="mahasiswa.keterangan"  checked id="default-radio-2" type="radio" value="Izin" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="default-radio-2" class="ml-2 text-sm font-medium text-black-900" value="Izin">Izin</label>
-                </div>
-                <div class="flex items-center mb-4">
-                  <input v-model="mahasiswa.keterangan"  checked id="default-radio-2" type="radio" value="Tidak Hadir" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                  <label for="default-radio-2" class="ml-2 text-sm font-medium text-black-900" value="Tidak Hadir">Tidak Hadir</label>
-              </div>
-                </div>
-                  <button
-                    class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                    type="submit"
-                  >
-                    {{ mahasiswa.isUpdate ? 'Update' : 'Absen'}}
-                  </button>
-                </form>     
-             </div>
               </div>
           </div>
       </div>
       </section>
 
-
-    <script src="./index.js"></script>
+      <script src="./index.js"></script>
+      
+      
   </body>
-</html>
+  </html>

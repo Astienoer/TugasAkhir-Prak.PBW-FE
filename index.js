@@ -2,133 +2,140 @@ const { createApp, ref, onMounted } = Vue;
 
 const app = createApp({
   setup() {
-    const url = "http://localhost:7000/mahasiswa";
+    const url = "http://localhost:5000/warga";
 
-    const mahasiswa = ref({
+    const warga = ref({
       id: null,
-      nim: "",
+      nik: "",
       nama: "",
-      keterangan: "",
+      jenisKelamin: "",
+      status: "",
       list: [],
       errorMessage: "",
       isError: false,
       isUpdate: false,
     });
 
-    const getMahasiswa = async () => {
+    const getWarga = async () => {
       try {
-        mahasiswa.value.isUpdate = false;
-        const resMahasiswa = await axios.get(url);
-        if (resMahasiswa.data.length === 0)
-          throw new Error("Mahasiswa gak ada");
-        mahasiswa.value.list = resMahasiswa.data;
-        return resMahasiswa.data;
+        warga.value.isUpdate = false;
+        const resWarga = await axios.get(url);
+        if (resWarga.data.length === 0)
+          throw new Error("Data warga tidak ditemukan");
+        warga.value.list = resWarga.data;
+        return resWarga.data;
       } catch (err) {
-        mahasiswa.value.isError = true;
-        mahasiswa.value.errorMessage = err.message;
-        mahasiswa.value.isUpdate = false;
+        warga.value.isError = true;
+        warga.value.errorMessage = err.message;
+        warga.value.isUpdate = false;
       }
     };
 
-    const getMahasiswaById = async (id) => {
+    const getWargaById = async (id) => {
       try {
-        const resMahasiswa = await axios.get(url + `/${id}`);
-        if (resMahasiswa.data.length === 0)
-          throw new Error("Mahasiswa gak ada");
-        mahasiswa.value.isUpdate = true;
-        mahasiswa.value.id = id;
-        mahasiswa.value.nim = resMahasiswa.data.nim;
-        mahasiswa.value.nama = resMahasiswa.data.nama;
-        mahasiswa.value.keterangan= resMahasiswa.data.keterangan;
-        return resMahasiswa.data;
+        const resWarga = await axios.get(url + `/${id}`);
+        if (resWarga.data.length === 0)
+          throw new Error("Data warga tidak ditemukan");
+        warga.value.isUpdate = true;
+        warga.value.id = id;
+        warga.value.nik = resWarga.data.nik;
+        warga.value.nama = resWarga.data.nama;
+        warga.value.jenisKelamin= resWarga.data.jenisKelamin;
+        warga.value.status= resWarga.data.status;
+        return resWarga.data;
       } catch (err) {
-        mahasiswa.value.nim = "";
-        mahasiswa.value.nama = "";
-        mahasiswa.value.keterangan = "";
-        mahasiswa.value.isUpdate = false;
-        mahasiswa.value.isError = true;
-        mahasiswa.value.errorMessage = err.message;
+        warga.value.nik = "";
+        warga.value.nama = "";
+        warga.value.jenisKelamin = "";
+        warga.value.status= "";
+        warga.value.isUpdate = false;
+        warga.value.isError = true;
+        warga.value.errorMessage = err.message;
       }
     };
-//Fungsi untuk menghapus data mahasiswa
-    const deleteMahasiswa = async (id) => {
+//Fungsi untuk menghapus data warga 
+    const deleteWarga = async (id) => {
       try {
-        mahasiswa.value.isUpdate = false;
-        const resMahasiswa = await axios.delete(url + "/delete", {
+        warga.value.isUpdate = false;
+        const resWarga = await axios.delete(url + "/delete", {
           data: {
             id,
           },
         });
-        if (resMahasiswa.data.length === 0)
-          throw new Error("Mahasiswa gak ada");
-        mahasiswa.value.list = resMahasiswa.data;
+        if (resWarga.data.length === 0)
+          throw new Error("Data warga tidak ada");
+        warga.value.list = resWarga.data;
         alert('Data berhasil di hapus');
-        await getMahasiswa();
-        return resMahasiswa.data;
+        await getWarga();
+        return resWarga.data;
       } catch (err) {
-        mahasiswa.value.isError = true;
-        mahasiswa.value.errorMessage = err.message;
+        warga.value.isError = true;
+        warga.value.errorMessage = err.message;
       }
     };
 
-    const submitMahasiswa = async () => {
+    const submitWarga = async () => {
       try {
-        mahasiswa.value.isUpdate = false;
+        warga.value.isUpdate = false;
         const post = await axios.post(url + "/create", {
-          nim: mahasiswa.value.nim,
-          nama: mahasiswa.value.nama,
-          keterangan: mahasiswa.value.keterangan,
+          nik: warga.value.nik,
+          nama: warga.value.nama,
+          jenisKelamin: warga.value.jenisKelamin,
+          status: warga.value.status,
         });
-        mahasiswa.value.isError = false;
-        mahasiswa.value.nim = "";
-        mahasiswa.value.nama = "";
-        mahasiswa.value.keterangan = "";
-        mahasiswa.value.isUpdate = false;
-        if (!post) throw new Error("Gagal membuat mahasiswa");
-        await getMahasiswa();
-        alert('SELAMAT BELAJAR');
+        warga.value.isError = false;
+        warga.value.nik = "";
+        warga.value.nama = "";
+        warga.value.jenisKelamin = "";
+        warga.value.status = "";
+        warga.value.isUpdate = false;
+        if (!post) throw new Error("Data warga tidak berhasil dibuat");
+        await getWarga();
+        alert('Warga berhasil ditambahkan');
       } catch (err) {
-        mahasiswa.value.isError = true;
-        mahasiswa.value.errorMessage = err.message;
+        warga.value.isError = true;
+        warga.value.errorMessage = err.message;
       }
     };
 
-    const updateMahasiswa = async () => {
+    const updateWarga = async () => {
       try {
-        mahasiswa.value.isUpdate = true;
+        warga.value.isUpdate = true;
         const put = await axios.put(url + "/update", {
-          id: mahasiswa.value.id,
-          nim: mahasiswa.value.nim,
-          nama: mahasiswa.value.nama,
-          keterangan: mahasiswa.value.keterangan,
+          id: warga.value.id,
+          nik: warga.value.nik,
+          nama: warga.value.nama,
+          jenisKelamin: warga.value.jenisKelamin,
+          status: warga.value.status,
         });
-        mahasiswa.value.isError = false;
-        mahasiswa.value.nim = "";
-        mahasiswa.value.nama = "";
-        mahasiswa.value.keterangan = "";
-        mahasiswa.value.isUpdate = false;
-        mahasiswa.value.isError = true;
-        if (!put) throw new Error("Gagal mengapdate mahasiswa");
-        await getMahasiswa();
-        alert('Data berhasil di update');
+        warga.value.isError = false;
+        warga.value.nik = "";
+        warga.value.nama = "";
+        warga.value.jenisKelamin = "";
+        warga.value.status = "";
+        warga.value.isUpdate = false;
+        warga.value.isError = true;
+        if (!put) throw new Error("Data warga tidak berhasil diperbaharui");
+        await getWarga();
+        alert('Data warga berhasil diperbaharui');
       } catch (err) {
-        mahasiswa.value.isUpdate = false;
-        mahasiswa.value.isError = true;
-        mahasiswa.value.errorMessage = err.message;
+        warga.value.isUpdate = false;
+        warga.value.isError = true;
+        warga.value.errorMessage = err.message;
       }
     };
 
 
     onMounted(async () => {
-      await getMahasiswa();
+      await getWarga();
     });
 
     return {
-      mahasiswa,
-      submitMahasiswa,
-      updateMahasiswa,
-      deleteMahasiswa,
-      getMahasiswaById,
+      warga,
+      submitWarga,
+      updateWarga,
+      deleteWarga,
+      getWargaById,
     };
   },
 });
